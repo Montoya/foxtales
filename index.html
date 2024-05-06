@@ -109,7 +109,7 @@
       document.getElementById('import').addEventListener('click', async (e) => { 
         e.stopPropagation(); 
         const example = await fetch("tale.json"); 
-        const exampleText = await exampleText.text(); 
+        const exampleText = await example.text(); 
         document.getElementById("tale").value = exampleText; 
         return false; 
       })

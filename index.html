@@ -52,15 +52,45 @@
         #player { 
           flex:1; 
         }
+        #player.game { 
+          background:#000; 
+          color:#fafafa; 
+          padding:18px; 
+          display:flex; 
+          flex-direction:column; 
+          align-items:center;
+        }
+        #player.game p { 
+          font-family:fantasy; 
+          font-size:24px; 
+        }
+        #player.game button { 
+          border:1px solid #fafafa; 
+          border-radius:4px; 
+          background-color: transparent;
+          color:#fafafa; 
+          font-weight:bold;
+          font-family:monospace; 
+          padding:8px 12px; 
+        }
+        #controls button { 
+          margin-left:18px; 
+        }
         #player button { 
           margin-right:18px; 
+          cursor:hand; 
+        }
+        #player button:hover { 
+          color:#fff200; 
+          border-color:#fff200; 
         }
       </style>
   </head>
   <body>
     <div id="editor">
       <div id="controls">
-        <button id="validate" name="validate" >Validate and Play</button>
+        <button class="btn btn-primary" id="import" name="import">Import Example</button> 
+        <button class="btn btn-primary" id="validate" name="validate" >Validate and Play</button>
       </div>
       <div id="input">
         <textarea id="tale" placeholder="Write your tale..."></textarea>
@@ -76,6 +106,13 @@
     </div>
     <script type="text/javascript" src="foxtales-validator.js"></script>
     <script type="text/javascript">
+      document.getElementById('import').addEventListener('click', async (e) => { 
+        e.stopPropagation(); 
+        const example = await fetch("tale.json"); 
+        const exampleText = await exampleText.text(); 
+        document.getElementById("tale").value = exampleText; 
+        return false; 
+      })
       document.getElementById('validate').addEventListener('click',(event) => { 
         event.stopPropagation(); 
         const taleInput = document.getElementById("tale").value; 
@@ -99,9 +136,10 @@
         const final = document.createElement('p');
         final.textContent = "Validation complete.";
         destination.appendChild(final); 
+        const player = document.getElementById("player"); 
         if(isValidTale) { 
           const tale = JSON.parse(taleInput); 
-          const player = document.getElementById("player"); 
+          player.className = "game"; 
 
           const update = (location = "start") => { 
             player.textContent = ''; 
@@ -109,6 +147,7 @@
             const pageText = document.createElement('p'); 
             pageText.textContent = page.text; 
             player.appendChild(pageText); 
+            const pageButtons = document.createElement('div'); 
             if(page.actions) { 
               for(i=0;i<page.actions.length;i++) { 
                 const action = page.actions[i]; 
@@ -118,7 +157,7 @@
                 button.addEventListener('click', e => { 
                   update(e.target.name); 
                 });  
-                player.appendChild(button); 
+                pageButtons.appendChild(button); 
               }
             }
             else if(page.condition) { 
@@ -137,8 +176,9 @@
                 update(e.target.name); 
               }); 
               player.appendChild(outcome); 
-              player.appendChild(restart); 
+              pageButtons.appendChild(restart); 
             }
+            player.appendChild(pageButtons); 
           }
 
           player.textContent = ''; 
@@ -151,6 +191,10 @@
             update(); 
           }); 
           player.appendChild(startButton); 
+        }
+        else { 
+          player.textContent = "You will be able to play the game here if it is valid..."; 
+          player.className = ''; 
         }
         return false; 
       }); 

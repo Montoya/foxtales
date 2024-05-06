@@ -52,13 +52,15 @@
         #player { 
           flex:1; 
         }
+        #player button { 
+          margin-right:18px; 
+        }
       </style>
   </head>
   <body>
     <div id="editor">
       <div id="controls">
-        <button id="validate" name="validate" >Validate</button> 
-        <button id="play" name="play">Play</button>
+        <button id="validate" name="validate" >Validate and Play</button>
       </div>
       <div id="input">
         <textarea id="tale" placeholder="Write your tale..."></textarea>
@@ -69,15 +71,16 @@
         Click "Validate" to validate your tale.
       </div>
       <div id="player">
-        Player coming soon... 
+        You will be able to play the game here if it is valid...
       </div>  
     </div>
     <script type="text/javascript" src="foxtales-validator.js"></script>
     <script type="text/javascript">
       document.getElementById('validate').addEventListener('click',(event) => { 
         event.stopPropagation(); 
-        const tale = document.getElementById("tale").value; 
-        const output = validateFoxTale(tale); 
+        const taleInput = document.getElementById("tale").value; 
+        const output = validateFoxTale(taleInput); 
+        let isValidTale = true; 
         const destination = document.getElementById("validator"); 
         destination.textContent = ''; 
         for (const item of output) { 
@@ -88,6 +91,7 @@
             }
             else { 
               p.textContent = `❌ ${value}`; 
+              isValidTale = false; 
             }
             destination.appendChild(p); 
           }
@@ -95,10 +99,60 @@
         const final = document.createElement('p');
         final.textContent = "Validation complete.";
         destination.appendChild(final); 
+        if(isValidTale) { 
+          const tale = JSON.parse(taleInput); 
+          const player = document.getElementById("player"); 
+
+          const update = (location = "start") => { 
+            player.textContent = ''; 
+            const page = tale.pages[location]; 
+            const pageText = document.createElement('p'); 
+            pageText.textContent = page.text; 
+            player.appendChild(pageText); 
+            if(page.actions) { 
+              for(i=0;i<page.actions.length;i++) { 
+                const action = page.actions[i]; 
+                const button = document.createElement('button');
+                button.textContent = action.text; 
+                button.name = action.goto; 
+                button.addEventListener('click', e => { 
+                  update(e.target.name); 
+                });  
+                player.appendChild(button); 
+              }
+            }
+            else if(page.condition) { 
+              const outcome = document.createElement('p');
+              const restart = document.createElement('button'); 
+              if(page.condition === "win") { 
+                outcome.textContent = "Congratulations, you win!";
+                restart.textContent = 'Play again';
+              }
+              else { 
+                outcome.textContent = "Sorry, you lose."; 
+                restart.textContent = 'Try again'; 
+              }
+              restart.name = "start"; 
+              restart.addEventListener('click', e => { 
+                update(e.target.name); 
+              }); 
+              player.appendChild(outcome); 
+              player.appendChild(restart); 
+            }
+          }
+
+          player.textContent = ''; 
+          const cover = document.createElement('p'); 
+          cover.textContent = `${tale.title} by ${tale.author.display_name}`
+          player.appendChild(cover); 
+          const startButton = document.createElement('button'); 
+          startButton.textContent = "Start"; 
+          startButton.addEventListener('click', e => { 
+            update(); 
+          }); 
+          player.appendChild(startButton); 
+        }
         return false; 
-      }); 
-      document.getElementById('play').addEventListener('click',() => { 
-        alert("Coming soon!"); 
       }); 
     </script>
   </body>

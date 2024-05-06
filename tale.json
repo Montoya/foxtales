@@ -24,7 +24,7 @@
       ]
     },
     "field": {
-      "text": "You pass through the trees and arrive at a field. It looks like a garden is being tended to here. Before you is a small cottage.",
+      "text": "You pass through the trees and arrive at a field. You see a garden. It is well-tended. Behind it is a small cottage.",
       "actions": [
         {
           "text": "Enter 🏠",

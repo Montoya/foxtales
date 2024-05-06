@@ -1,0 +1,78 @@
+{ 
+  "title": "Example FoxTale",
+  "author": { 
+    "fid": 4275,
+    "name": "m0nt0y4",
+    "display_name": "Christian Montoya"
+  },
+  "pages": {
+    "start": {
+      "text": "You awake in a small clearing surrounded by trees.",
+      "actions": [
+        { 
+          "text": "Walk north",
+          "goto": "field"
+        },
+        {
+          "text": "Walk east",
+          "goto": "riverbank"
+        },
+        {
+          "text": "Walk west",
+          "goto": "market"
+        }
+      ]
+    },
+    "field": {
+      "text": "You pass through the trees and arrive at a field. It looks like a garden is being tended to here. Before you is a small cottage.",
+      "actions": [
+        {
+          "text": "Enter 🏠",
+          "goto": "cottage"
+        },
+        {
+          "text": "Go back",
+          "goto": "start"
+        }
+      ]
+    },
+    "cottage": { 
+      "text": "You enter the cottage. It is dark. Suddenly you hear a sound like a large creature charging toward you. Then nothing. YOU HAVE DIED.",
+      "condition": "lose"
+    },
+    "riverbank": { 
+      "text": "You arrive at the bank of a large river. The water is rushing past you. There is a small boat tied to a stake. The water is thrashing it wildly.",
+      "actions": [
+        {
+          "text": "Use 🚣 to cross",
+          "goto": "river"
+        },
+        {
+          "text": "Go back",
+          "goto": "start"
+        }
+      ]
+    },
+    "river": { 
+      "text": "You board the boat and untie the rope. Suddenly the boat is speeding along the water. You lose control and fall into the river. You cannot swim. It's over.",
+      "condition": "lose"
+    },
+    "market": { 
+      "text": "You arrive at a grand bazaar. A strange looking merchant approaches you. She offers you something. 'I don't want this anymore', she says. It is glowing in her hand.",
+      "actions": [
+        {
+          "text": "Accept it",
+          "goto": "take"
+        },
+        {
+          "text": "Run away",
+          "goto": "start"
+        }
+      ]
+    },
+    "take": { 
+      "text": "You take the item. It is like a small jewel. You can feel your tension being released. 'Congratulations,' she says. 'This is the win stone.' YOU HAVE WON THE GAME.",
+      "condition": "win"
+    }
+  }
+}

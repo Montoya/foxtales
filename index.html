@@ -49,6 +49,9 @@
         #validator { 
           flex:2; 
         }
+        #validator p { 
+          margin-bottom:0; 
+        }
         #player { 
           flex:1; 
         }
@@ -58,11 +61,12 @@
           padding:18px; 
           display:flex; 
           flex-direction:column; 
-          align-items:center;
+          justify-content:center;
         }
         #player.game p { 
           font-family:fantasy; 
           font-size:24px; 
+          line-height:1.5; 
         }
         #player.game button { 
           border:1px solid #fafafa; 
@@ -78,7 +82,7 @@
         }
         #player button { 
           margin-right:18px; 
-          cursor:hand; 
+          cursor:pointer; 
         }
         #player button:hover { 
           color:#fff200; 
@@ -108,7 +112,7 @@
     <script type="text/javascript">
       document.getElementById('import').addEventListener('click', async (e) => { 
         e.stopPropagation(); 
-        const example = await fetch("tale.json"); 
+        const example = await fetch("https://montoya.github.io/foxtales-sandbox/tale.json"); 
         const exampleText = await example.text(); 
         document.getElementById("tale").value = exampleText; 
         return false; 
@@ -165,10 +169,12 @@
               const restart = document.createElement('button'); 
               if(page.condition === "win") { 
                 outcome.textContent = "Congratulations, you win!";
+                outcome.style.color = "#32ff7e"; 
                 restart.textContent = 'Play again';
               }
               else { 
                 outcome.textContent = "Sorry, you lose."; 
+                outcome.style.color = "#ff6b81"; 
                 restart.textContent = 'Try again'; 
               }
               restart.name = "start"; 
@@ -190,7 +196,9 @@
           startButton.addEventListener('click', e => { 
             update(); 
           }); 
-          player.appendChild(startButton); 
+          const startDiv = document.createElement('div'); 
+          startDiv.appendChild(startButton); 
+          player.appendChild(startDiv); 
         }
         else { 
           player.textContent = "You will be able to play the game here if it is valid..."; 

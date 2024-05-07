@@ -15,7 +15,7 @@
         },
         {
           "text": "Walk east",
-          "goto": "riverbank"
+          "goto": "ravine"
         },
         {
           "text": "Walk west",
@@ -77,6 +77,24 @@
         }
       ]
     },
+    "ravine": {
+      "text": "You tumble into a ravine. To your east is a river. To your west is the clearing where you started.",
+      "actions": [
+        {
+          "text": "Go east",
+          "goto": "riverbank"
+        },
+        {
+          "text": "Go west",
+          "goto": "start"
+        },
+        {
+          "text": "Pick up 🔪",
+          "acquire": "🔪",
+          "hint": "You spot a 🔪 in the dirt."
+        }
+      ]
+    },
     "riverbank": { 
       "text": "You arrive at the bank of a large river. The water is rushing past you. 'sesame' is scribbled in the dirt.",
       "actions": [
@@ -88,13 +106,16 @@
           ]
         },
         {
-          "text": "Get 🚣",
+          "text": "Cut rope",
           "acquire": "🚣",
-          "hint": "A 🚣 is at the edge of the water."
+          "hint": "A 🚣 is tied to a stake.",
+          "requires": [
+            "🔪"
+          ]
         },
         {
           "text": "Go back",
-          "goto": "start"
+          "goto": "ravine"
         }
       ]
     },

@@ -1,5 +1,5 @@
 { 
-  "title": "FoxTale with items",
+  "title": "Complex FoxTale",
   "author": { 
     "fid": 4275,
     "name": "m0nt0y4",
@@ -31,9 +31,10 @@
           "goto": "cottage"
         },
         {
-          "text": "Pick up 🔦",
+          "text": "Open chest",
           "acquire": "🔦",
-          "hint": "On the porch is a dusty flashlight."
+          "hint": "On the porch is a chest.",
+          "code": "c8dae1c50e092f3d877192fc555b1dcf"
         }
       ]
     },
@@ -77,7 +78,7 @@
       ]
     },
     "riverbank": { 
-      "text": "You arrive at the bank of a large river. The water is rushing past you.",
+      "text": "You arrive at the bank of a large river. The water is rushing past you. 'sesame' is scribbled in the dirt.",
       "actions": [
         {
           "text": "Use 🚣 to cross",
@@ -115,7 +116,7 @@
       "actions": [
         {
           "text": "Offer items",
-          "goto": "win",
+          "goto": "traded",
           "requires": [
             "🚣", "🔦"
           ]
@@ -126,8 +127,18 @@
         }
       ]
     },
+    "traded": { 
+      "text": "'Just what I needed, a 🚣 and a 🔦! Now just solve a riddle. What is the author's name?'",
+      "actions": [
+        {
+          "text": "Answer",
+          "goto": "win",
+          "code": "8e534e3958cdfad70ab51c740f90ad93"
+        }
+      ]
+    },
     "win": { 
-      "text": "'Just what I needed, a 🚣 and a 🔦! In return, I offer you the win stone.' It glows in your hands.",
+      "text": "'That's right! I offer you the win stone.' It glows in your hands.",
       "condition": "win"
     }
   }

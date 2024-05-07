@@ -74,21 +74,20 @@ const validateFoxTale = (tale) => {
               pagesAreValid = false; 
             }
             // time to validate actions 
-            for(i in page.actions) { 
+            for(let i=0;i<page.actions.length;i++) { 
               const action = page.actions[i]; 
-              const thisActionIsValid = true; 
+              let thisActionIsValid = true; 
               if(typeof action.text === "string") { 
                 if(action.text.length < 1 || action.text.length > 16) { 
                   output.push({
                     error: `Page "${key}" action ${i+1} text must be 1-16 characters long`
                   })
                   pagesAreValid = false; 
-                  thisActionIsValid = false; 
                 }
                 if(action.goto) { 
                   if(!pageKeys.includes(action.goto)) { 
                     output.push({
-                      error: `Action ${i+1} of page ${key} goes to a non-existent page`
+                      error: `Page "${key}" action ${i+1} goes to a non-existent page`
                     })
                     pagesAreValid = false; 
                   }
@@ -117,14 +116,16 @@ const validateFoxTale = (tale) => {
                   foundItems.push(action.acquire); 
                 }
                 else { 
-                  thisActionIsValid = false; 
+                  output.push({
+                    error: `Page "${key}" action ${i+1} is missing a goto or acquire`
+                  })
+                  pagesAreValid = false; 
                 }
-              }
-              if(!thisActionIsValid) { 
-                output.push({
-                  error: `Page "${key}" contains an invalid action; must have a text and a goto or acquire`
-                })
-                pagesAreValid = false; 
+                if(action.code) { 
+                  output.push({
+                    warning: `Page "${key}" action ${i+1} has a code, make sure you know the solution`
+                  })
+                }
               }
             }
           }
@@ -167,7 +168,6 @@ const validateFoxTale = (tale) => {
       }
       for(i in foundRequirements) { 
         const requirement = foundRequirements[i]; 
-        console.log(requirement); 
         if(!includesAll(foundItems, requirement.requirement)) { 
           output.push({
             error: `Page "${requirement.key}" action "${requirement.actionIndex}" requires items that are not obtainable`

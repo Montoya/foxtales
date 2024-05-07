@@ -99,7 +99,7 @@
     <div id="editor">
       <div id="controls">
         <button class="btn btn-primary" id="import" name="import">Import Simple</button> 
-        <button class="btn btn-primary" id="import2" name="import2">Import With Items</button> 
+        <button class="btn btn-primary" id="import2" name="import2">Import Complex</button> 
         <button class="btn btn-primary" id="validate" name="validate" >Validate and Play</button>
       </div>
       <div id="input">
@@ -114,6 +114,7 @@
         You will be able to play the game here if it is valid...
       </div>  
     </div>
+    <script type="text/javascript" src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>
     <script type="text/javascript" src="foxtales-validator.js"></script>
     <script type="text/javascript">
       // import example 
@@ -126,7 +127,7 @@
       }); 
       document.getElementById('import2').addEventListener('click', async (e) => { 
         e.stopPropagation(); 
-        const example = await fetch("https://montoya.github.io/foxtales-sandbox/tale-with-items.json"); 
+        const example = await fetch("https://montoya.github.io/foxtales-sandbox/complex-tale.json"); 
         const exampleText = await example.text(); 
         document.getElementById("tale").value = exampleText; 
         return false; 
@@ -145,6 +146,9 @@
             if(key==="success") { 
               p.textContent = `✅ ${value}`; 
             }
+            else if(key==="warning") { 
+              p.textContent = `⚠️ ${value}`; 
+            }
             else { 
               p.textContent = `❌ ${value}`; 
               isValidTale = false; 
@@ -162,7 +166,7 @@
 
           let inventory = []; 
 
-          const update = (location = "start", item) => { 
+          const update = (location = "start", item, code) => { 
             player.textContent = ''; 
             const page = tale.pages[location]; 
             const pageText = document.createElement('p'); 
@@ -200,11 +204,26 @@
                   button.dataset.location = `${location}`; // small hack 
                 }
                 button.addEventListener('click', e => { 
+                  // if there is a code, require that first 
                   if(e.target.name === "goto") { 
-                    update(e.target.dataset.location); 
+                    if(action.code) { 
+                      const attempt = prompt("Enter the code to proceed");
+                      if(action.code==md5(attempt)) update(e.target.dataset.location); 
+                      else alert("Sorry, try again"); 
+                    }
+                    else { 
+                      update(e.target.dataset.location); 
+                    }
                   }
                   else if(e.target.name === "acquire") { 
-                    update(e.target.dataset.location, e.target.dataset.item); 
+                    if(action.code) { 
+                      const attempt = prompt("Enter the code to unlock"); 
+                      if(action.code==md5(attempt)) update(e.target.dataset.location, e.target.dataset.item); 
+                      else alert("Sorry, try again"); 
+                    }
+                    else { 
+                      update(e.target.dataset.location, e.target.dataset.item); 
+                    }
                   }
                 });  
                 pageButtons.appendChild(button); 

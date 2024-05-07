@@ -34,7 +34,7 @@
           "text": "Open chest",
           "acquire": "🔦",
           "hint": "On the porch is a chest.",
-          "code": "c8dae1c50e092f3d877192fc555b1dcf"
+          "code": "sesame"
         }
       ]
     },
@@ -154,7 +154,7 @@
         {
           "text": "Answer",
           "goto": "win",
-          "code": "8e534e3958cdfad70ab51c740f90ad93"
+          "code": "Christian Montoya"
         }
       ]
     },

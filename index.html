@@ -64,7 +64,7 @@
           justify-content:center;
         }
         #player.game p { 
-          font-family:fantasy; 
+          font-family:serif; 
           font-size:24px; 
           line-height:1.5; 
         }
@@ -88,12 +88,18 @@
           color:#fff200; 
           border-color:#fff200; 
         }
+        #inventory { 
+          font-size:12px; 
+          font-family:monospace; 
+          padding-top:12px; 
+        }
       </style>
   </head>
   <body>
     <div id="editor">
       <div id="controls">
-        <button class="btn btn-primary" id="import" name="import">Import Example</button> 
+        <button class="btn btn-primary" id="import" name="import">Import Simple</button> 
+        <button class="btn btn-primary" id="import2" name="import2">Import With Items</button> 
         <button class="btn btn-primary" id="validate" name="validate" >Validate and Play</button>
       </div>
       <div id="input">
@@ -110,13 +116,22 @@
     </div>
     <script type="text/javascript" src="foxtales-validator.js"></script>
     <script type="text/javascript">
+      // import example 
       document.getElementById('import').addEventListener('click', async (e) => { 
         e.stopPropagation(); 
         const example = await fetch("https://montoya.github.io/foxtales-sandbox/tale.json"); 
         const exampleText = await example.text(); 
         document.getElementById("tale").value = exampleText; 
         return false; 
-      })
+      }); 
+      document.getElementById('import2').addEventListener('click', async (e) => { 
+        e.stopPropagation(); 
+        const example = await fetch("https://montoya.github.io/foxtales-sandbox/tale-with-items.json"); 
+        const exampleText = await example.text(); 
+        document.getElementById("tale").value = exampleText; 
+        return false; 
+      }); 
+      // validate and play 
       document.getElementById('validate').addEventListener('click',(event) => { 
         event.stopPropagation(); 
         const taleInput = document.getElementById("tale").value; 
@@ -145,21 +160,52 @@
           const tale = JSON.parse(taleInput); 
           player.className = "game"; 
 
-          const update = (location = "start") => { 
+          let inventory = []; 
+
+          const update = (location = "start", item) => { 
             player.textContent = ''; 
             const page = tale.pages[location]; 
             const pageText = document.createElement('p'); 
             pageText.textContent = page.text; 
             player.appendChild(pageText); 
+            // if an item is present, add it to the inventory, then ensure the acquire action is not shown again 
+            if(item) { 
+              inventory.push(item); // should always be unique 
+              const acquireText = document.createElement('p'); 
+              acquireText.textContent = `You have acquired the ${item}.`; 
+              player.appendChild(acquireText); 
+            }
             const pageButtons = document.createElement('div'); 
             if(page.actions) { 
               for(i=0;i<page.actions.length;i++) { 
                 const action = page.actions[i]; 
+                if(action.acquire && inventory.includes(action.acquire)) continue; // no need to show this button
+                if(action.requires) { 
+                  if(!includesAll(inventory, action.requires)) { 
+                    // drop the hint if there is one and skip showing this button 
+                    if(action.hint) pageText.textContent = `${pageText.textContent} ${action.hint}`; 
+                    continue;
+                  }
+                }
                 const button = document.createElement('button');
                 button.textContent = action.text; 
-                button.name = action.goto; 
+                if(action.goto) { 
+                  button.name = "goto";
+                  button.dataset.location = action.goto; 
+                }
+                else if(action.acquire) { 
+                  if(action.hint) pageText.textContent = `${pageText.textContent} ${action.hint}`; // small hack 
+                  button.name = "acquire";
+                  button.dataset.item = action.acquire; 
+                  button.dataset.location = `${location}`; // small hack 
+                }
                 button.addEventListener('click', e => { 
-                  update(e.target.name); 
+                  if(e.target.name === "goto") { 
+                    update(e.target.dataset.location); 
+                  }
+                  else if(e.target.name === "acquire") { 
+                    update(e.target.dataset.location, e.target.dataset.item); 
+                  }
                 });  
                 pageButtons.appendChild(button); 
               }
@@ -183,8 +229,15 @@
               }); 
               player.appendChild(outcome); 
               pageButtons.appendChild(restart); 
+              inventory = []; 
             }
             player.appendChild(pageButtons); 
+            if(inventory.length > 0) { 
+              const inventoryRow = document.createElement('div'); 
+              inventoryRow.id="inventory";
+              inventoryRow.textContent = `Inventory: ${inventory.join(" ")}`; 
+              player.appendChild(inventoryRow); 
+            }
           }
 
           player.textContent = ''; 

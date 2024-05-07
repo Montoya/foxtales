@@ -1,0 +1,134 @@
+{ 
+  "title": "Example FoxTale",
+  "author": { 
+    "fid": 4275,
+    "name": "m0nt0y4",
+    "display_name": "Christian Montoya"
+  },
+  "pages": {
+    "start": {
+      "text": "You awake in a small clearing surrounded by trees.",
+      "actions": [
+        { 
+          "text": "Walk north",
+          "goto": "field"
+        },
+        {
+          "text": "Walk east",
+          "goto": "riverbank"
+        },
+        {
+          "text": "Walk west",
+          "goto": "market"
+        }
+      ]
+    },
+    "field": {
+      "text": "You pass through the trees and arrive at a field. You see a garden. It is well-tended. Behind it is a small cottage.",
+      "actions": [
+        {
+          "text": "Enter 🏠",
+          "goto": "cottage"
+        },
+        {
+          "text": "Pick up 🔦",
+          "acquire": "🔦",
+          "hint": "On the porch is a dusty flashlight."
+        }
+      ]
+    },
+    "cottage": { 
+      "text": "You enter the cottage. It is dark. You cannot see a thing. You hear a low growl in the darkness.",
+      "actions": [
+        {
+          "text": "Use 🔦",
+          "goto": "cottagelit",
+          "requires": [
+            "🔦"
+          ],
+          "hint": "A flashlight would be useful here."
+        },
+        {
+          "text": "Walk forward",
+          "goto": "darkroom"
+        }
+      ]
+    },
+    "darkroom": { 
+      "text": "You stumble forward in the dark. Suddenly you hear a sound like a beast rushing toward you. Then, silence.",
+      "condition": "lose"
+    },
+    "cottagelit": { 
+      "text": "You flip the switch on your 🔦. Directly in front of you, you can clearly see a large, angry bear. It lunges toward you.",
+      "actions": [
+        {
+          "text": "Run away",
+          "goto": "field2"
+        }
+      ]
+    },
+    "field2": { 
+      "text": "You make it safely out the door and back into the field. The bear does not give chase. You see the clearing where you started just past the trees ahead of you.",
+      "actions": [
+        {
+          "text": "Return",
+          "goto": "start"
+        }
+      ]
+    },
+    "riverbank": { 
+      "text": "You arrive at the bank of a large river. The water is rushing past you.",
+      "actions": [
+        {
+          "text": "Use 🚣 to cross",
+          "goto": "river",
+          "requires": [
+            "🚣"
+          ]
+        },
+        {
+          "text": "Get 🚣",
+          "acquire": "🚣",
+          "hint": "A 🚣 is at the edge of the water."
+        },
+        {
+          "text": "Go back",
+          "goto": "start"
+        }
+      ]
+    },
+    "river": { 
+      "text": "You board the boat and untie the rope. Suddenly the boat is speeding along the water. You lose control and fall into the river. You cannot swim. It's over.",
+      "condition": "lose"
+    },
+    "market": { 
+      "text": "You arrive at a grand bazaar. A strange looking merchant approaches you. In her hand is a glowing jewel. 'Fancy a trade?'",
+      "actions": [
+        {
+          "text": "Ask to trade",
+          "goto": "trade"
+        }
+      ]
+    },
+    "trade": { 
+      "text": "'Do you have what I am looking for? I want to go rowing in the dark of night.'",
+      "actions": [
+        {
+          "text": "Offer items",
+          "goto": "win",
+          "requires": [
+            "🚣", "🔦"
+          ]
+        },
+        {
+          "text": "Run away",
+          "goto": "start"
+        }
+      ]
+    },
+    "win": { 
+      "text": "'Just what I needed, a 🚣 and a 🔦! In return, I offer you the win stone.' It glows in your hands.",
+      "condition": "win"
+    }
+  }
+}

@@ -208,7 +208,7 @@
                   if(e.target.name === "goto") { 
                     if(action.code) { 
                       const attempt = prompt("Enter the code to proceed");
-                      if(action.code==md5(attempt)) update(e.target.dataset.location); 
+                      if(action.code==attempt.trim()) update(e.target.dataset.location); 
                       else alert("Sorry, try again"); 
                     }
                     else { 
@@ -218,7 +218,7 @@
                   else if(e.target.name === "acquire") { 
                     if(action.code) { 
                       const attempt = prompt("Enter the code to unlock"); 
-                      if(action.code===attempt.trim()) update(e.target.dataset.location, e.target.dataset.item); 
+                      if(action.code==attempt.trim()) update(e.target.dataset.location, e.target.dataset.item); 
                       else alert("Sorry, try again"); 
                     }
                     else { 

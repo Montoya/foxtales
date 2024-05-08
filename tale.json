@@ -37,7 +37,7 @@
       ]
     },
     "cottage": { 
-      "text": "You enter the cottage. It is dark. Suddenly you hear a sound like a large creature charging toward you. Then nothing. YOU HAVE DIED.",
+      "text": "You enter the cottage. It is dark. Suddenly you hear a sound like a large creature charging toward you. Then nothing.",
       "condition": "lose"
     },
     "riverbank": { 
@@ -54,11 +54,11 @@
       ]
     },
     "river": { 
-      "text": "You board the boat and untie the rope. Suddenly the boat is speeding along the water. You lose control and fall into the river. You cannot swim. It's over.",
+      "text": "You board the boat and untie the rope. Suddenly the boat is speeding along the water. You lose control and fall into the river. You cannot swim.",
       "condition": "lose"
     },
     "market": { 
-      "text": "You arrive at a grand bazaar. A strange looking merchant approaches you. She offers you something. 'I don't want this anymore', she says. It is glowing in her hand.",
+      "text": "You arrive at a grand bazaar. A strange looking merchant approaches you. She offers you something. “I don’t want this anymore”, she says. It is glowing in her hand.",
       "actions": [
         {
           "text": "Accept it",
@@ -71,7 +71,7 @@
       ]
     },
     "take": { 
-      "text": "You take the item. It is like a small jewel. You can feel your tension being released. 'Congratulations,' she says. 'This is the win stone.' YOU HAVE WON THE GAME.",
+      "text": "You take the item. It is like a small jewel. You can feel your tension being released. “Congratulations,” she says. “This is the win stone.”",
       "condition": "win"
     }
   }

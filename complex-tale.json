@@ -96,7 +96,7 @@
       ]
     },
     "riverbank": { 
-      "text": "You arrive at the bank of a large river. The water is rushing past you. 'sesame' is scribbled in the dirt.",
+      "text": "You arrive at the bank of a large river. The water is rushing past you. [sesame] is scribbled in the dirt.",
       "actions": [
         {
           "text": "Use 🚣 to cross",
@@ -120,11 +120,11 @@
       ]
     },
     "river": { 
-      "text": "You board the boat and untie the rope. Suddenly the boat is speeding along the water. You lose control and fall into the river. You cannot swim. It's over.",
+      "text": "You board the boat and untie the rope. Suddenly the boat is speeding along the water. You lose control and fall into the river. You cannot swim.",
       "condition": "lose"
     },
     "market": { 
-      "text": "You arrive at a grand bazaar. A strange looking merchant approaches you. In her hand is a glowing jewel. 'Fancy a trade?'",
+      "text": "You arrive at a grand bazaar. A strange looking merchant approaches you. In her hand is a glowing jewel. “Fancy a trade?”",
       "actions": [
         {
           "text": "Ask to trade",
@@ -133,7 +133,7 @@
       ]
     },
     "trade": { 
-      "text": "'Do you have what I am looking for? I want to go rowing in the dark of night.'",
+      "text": "“Do you have what I am looking for? I want to go rowing in the dark of night.”",
       "actions": [
         {
           "text": "Offer items",
@@ -149,7 +149,7 @@
       ]
     },
     "traded": { 
-      "text": "'Just what I needed, a 🚣 and a 🔦! Now just solve a riddle. What is the author's name?'",
+      "text": "“Just what I needed, a 🚣 and a 🔦! Now just solve a riddle. What is the author’s name?”",
       "actions": [
         {
           "text": "Answer",
@@ -159,7 +159,7 @@
       ]
     },
     "win": { 
-      "text": "'That's right! I offer you the win stone.' It glows in your hands.",
+      "text": "“That’s right! I offer you the win stone.” It glows in your hands.",
       "condition": "win"
     }
   }

@@ -24,14 +24,14 @@ const validateFoxTale = (tale) => {
       error: "Title not found or not a valid string"
     })
   }
-  if(typeof tale.author == "object" && Object.keys(tale.author).includes("fid","name","display_name")) { 
+  if(typeof tale.author == "object" && tale.author.display_name) { 
     output.push({
       success: "Author"
     })
   }
   else { 
     output.push({
-      error: "Author not found or not a valid object containing fid, name, and display_name"
+      error: "Author display name not found"
     })
   }
   if(typeof tale.pages == "object") { 

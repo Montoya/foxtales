@@ -120,14 +120,14 @@
       // import example 
       document.getElementById('import').addEventListener('click', async (e) => { 
         e.stopPropagation(); 
-        const example = await fetch("https://montoya.github.io/foxtales-sandbox/tale.json"); 
+        const example = await fetch("https://sandbox.foxtales.fun/tale.json"); 
         const exampleText = await example.text(); 
         document.getElementById("tale").value = exampleText; 
         return false; 
       }); 
       document.getElementById('import2').addEventListener('click', async (e) => { 
         e.stopPropagation(); 
-        const example = await fetch("https://montoya.github.io/foxtales-sandbox/complex-tale.json"); 
+        const example = await fetch("https://sandbox.foxtales.fun/complex-tale.json"); 
         const exampleText = await example.text(); 
         document.getElementById("tale").value = exampleText; 
         return false; 

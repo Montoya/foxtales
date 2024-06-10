@@ -181,7 +181,7 @@
             }
             const pageButtons = document.createElement('div'); 
             if(page.actions) { 
-              for(i=0;i<page.actions.length;i++) { 
+              for(let i=0;i<page.actions.length;i++) { 
                 const action = page.actions[i]; 
                 if(action.acquire && inventory.includes(action.acquire)) continue; // no need to show this button
                 if(action.requires) { 
